@@ -59,14 +59,15 @@ const EventForm = () => {
           placeholder="Event Name"
           required
         />
+        FROM - {""}
         <DatePicker
             selected={startDate}
             onChange={(date) => setStartDate(date)}
             dateFormat="MM/dd/yyyy"
             minDate={new Date()}
             maxDate={addMonths(new Date(), 5)} // Updated maxDate
-        />
-
+        /> <br />
+        TO - {""}
         <DatePicker
             selected={endDate}
             onChange={(date) => setEndDate(date)}
@@ -74,7 +75,7 @@ const EventForm = () => {
             minDate={startDate}
             maxDate={addMonths(new Date(), 5)} // Updated maxDate
         />
-        <div>
+        <div>   
           {daysOfWeek.map((day) => (
             <label key={day}>
               <input
