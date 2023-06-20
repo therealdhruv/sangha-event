@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import addDays from 'date-fns/addDays';
+import addMonths from 'date-fns/addMonths'; 
 import '../styles/event.css';
 
 const EventForm = () => {
@@ -60,18 +60,19 @@ const EventForm = () => {
           required
         />
         <DatePicker
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}
-          dateFormat="MM/dd/yyyy"
-          minDate={new Date()}
-          maxDate={addDays(new Date(), 7)}
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            dateFormat="MM/dd/yyyy"
+            minDate={new Date()}
+            maxDate={addMonths(new Date(), 5)} // Updated maxDate
         />
+
         <DatePicker
-          selected={endDate}
-          onChange={(date) => setEndDate(date)}
-          dateFormat="MM/dd/yyyy"
-          minDate={startDate}
-          maxDate={addDays(new Date(), 7)}
+            selected={endDate}
+            onChange={(date) => setEndDate(date)}
+            dateFormat="MM/dd/yyyy"
+            minDate={startDate}
+            maxDate={addMonths(new Date(), 5)} // Updated maxDate
         />
         <div>
           {daysOfWeek.map((day) => (
@@ -101,7 +102,7 @@ const EventForm = () => {
             </p>
           </div>
         ))}
-      </div>
+      </div> <br /> <br />
       <button onClick={handleClearLocalStorage}>Clear Local Storage</button>
     </div>
   );
