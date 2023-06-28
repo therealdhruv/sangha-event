@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import addMonths from 'date-fns/addMonths'; 
-import '../styles/event.css';
+import addMonths from "date-fns/addMonths";
+import "../styles/event.css";
 
 const EventForm = () => {
-  const [eventName, setEventName] = useState('');
+  const [eventName, setEventName] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [recurringDays, setRecurringDays] = useState([]);
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    const storedEvents = localStorage.getItem('events');
+    const storedEvents = localStorage.getItem("events");
     if (storedEvents) {
       const parsedEvents = JSON.parse(storedEvents);
-      const convertedEvents = parsedEvents.map(event => ({
+      const convertedEvents = parsedEvents.map((event) => ({
         ...event,
         startDate: new Date(event.startDate),
-        endDate: new Date(event.endDate)
+        endDate: new Date(event.endDate),
       }));
       setEvents(convertedEvents);
     }
@@ -26,14 +26,25 @@ const EventForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newEvents = [...events, { eventName, startDate, endDate, recurringDays }];
+    const newEvents = [
+      ...events,
+      { eventName, startDate, endDate, recurringDays },
+    ];
     setEvents(newEvents);
-    localStorage.setItem('events', JSON.stringify(newEvents));
-    setEventName('');
+    localStorage.setItem("events", JSON.stringify(newEvents));
+    setEventName("");
     setRecurringDays([]);
   };
 
-  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const daysOfWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
 
   const handleRecurringDaysChange = (e) => {
     const day = e.target.value;
@@ -61,21 +72,22 @@ const EventForm = () => {
         />
         FROM - {""}
         <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            dateFormat="MM/dd/yyyy"
-            minDate={new Date()}
-            maxDate={addMonths(new Date(), 5)} // Updated maxDate
-        /> <br />
+          selected={startDate}
+          onChange={(date) => setStartDate(date)}
+          dateFormat="MM/dd/yyyy"
+          minDate={new Date()}
+          maxDate={addMonths(new Date(), 5)} // Updated maxDate
+        />{" "}
+        <br />
         TO - {""}
         <DatePicker
-            selected={endDate}
-            onChange={(date) => setEndDate(date)}
-            dateFormat="MM/dd/yyyy"
-            minDate={startDate}
-            maxDate={addMonths(new Date(), 5)} // Updated maxDate
+          selected={endDate}
+          onChange={(date) => setEndDate(date)}
+          dateFormat="MM/dd/yyyy"
+          minDate={startDate}
+          maxDate={addMonths(new Date(), 5)} // Updated maxDate
         />
-        <div>   
+        <div>
           {daysOfWeek.map((day) => (
             <label key={day}>
               <input
@@ -99,11 +111,12 @@ const EventForm = () => {
               <br />
               End Date: {event.endDate.toLocaleDateString()}
               <br />
-              Recurring Days: {event.recurringDays.join(', ')}
+              Recurring Days: {event.recurringDays.join(", ")}
             </p>
           </div>
         ))}
-      </div> <br /> <br />
+      </div>{" "}
+      <br /> <br />
       <button onClick={handleClearLocalStorage}>Clear Local Storage</button>
     </div>
   );
